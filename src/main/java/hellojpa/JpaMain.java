@@ -13,11 +13,17 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = em.find(Member.class, 2L);
+            // 비영속
+            Member newMember = new Member();
+            newMember.setId(101L);
+            newMember.setName("name");
             
-            //값마 변경해도 update 쿼리가 실행됨
-            member.setName("이름 변경");
-            System.out.println("==========");
+            // 영속
+            System.out.println("BEFORE==========");
+            em.persist(newMember);
+            System.out.println("AFTER==========");
+            
+            Member findMember = em.find(Member.class, 101L);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
