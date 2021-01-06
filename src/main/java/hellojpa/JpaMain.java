@@ -13,11 +13,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member memberA = new Member(102L, "A");
-            Member memberB = new Member(103L, "B");
+            Member member = new Member(200L, "member200");
+            em.persist(member);
+            em.flush(); // 플러시 강제호출
             
-            em.persist(memberA);
-            em.persist(memberB);
             System.out.println("==========");
             
             tx.commit();
