@@ -13,11 +13,12 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member(200L, "member200");
-            em.persist(member);
-            em.flush(); // 플러시 강제호출
+            // 영속
+            Member member = em.find(Member.class, 101L);
+            member.setName("변경실패");
             
-            System.out.println("==========");
+            // 해당 엔티티 준영속 상태로 변경
+            em.detach(member);
             
             tx.commit();
         } catch (Exception e) {
