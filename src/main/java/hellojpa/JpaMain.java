@@ -15,6 +15,9 @@ public class JpaMain {
         try {
             Member findMember1 = em.find(Member.class, 101L);
             Member findMember2 = em.find(Member.class, 101L);
+            if(findMember1 == findMember2) {
+                System.out.println("같다");
+            }
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
