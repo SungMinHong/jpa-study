@@ -18,7 +18,11 @@ public class JpaMain {
         try {
             Member member = new Member();
             member.setUsername("A");
+            // 커밋 이전에 DB에 insert 쿼리 날아감
             em.persist(member);
+
+            // 커밋 이전에 ID를 알 수 있음
+            System.out.println("memberId: " + member.getId());
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
