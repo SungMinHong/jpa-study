@@ -12,6 +12,7 @@ public class Member {
     
     private Integer age;
     
+    // 절대 EnumType.STRING 명시할 것. 안 쓰면 EnumType.ORDINAL로 실행되서 운영에서 문제가 됨.
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
     
