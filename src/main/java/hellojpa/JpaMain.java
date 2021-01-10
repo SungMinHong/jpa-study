@@ -16,13 +16,20 @@ public class JpaMain {
         tx.begin();
 
         try {
+            //팀 저장
+            System.out.println("팀 저장");
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+            
+            //회원 저장 
+            System.out.println("회원 저장");
             Member member = new Member();
-            member.setUsername("A");
-            // 커밋 이전에 DB에 insert 쿼리 날아감
+            member.setUsername("member1");
+            member.setTeam(team);
             em.persist(member);
-
-            // 커밋 이전에 ID를 알 수 있음
-            System.out.println("memberId: " + member.getId());
+            
+            System.out.println("트랜잭션 커밋");
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
