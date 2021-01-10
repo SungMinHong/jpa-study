@@ -4,8 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-
-
+import java.util.List;
 
 
 public class JpaMain {
@@ -28,6 +27,18 @@ public class JpaMain {
             member.setUsername("member1");
             member.setTeam(team);
             em.persist(member);
+
+            em.flush(); // DB에 쿼리 반영
+            em.clear(); // 1차 캐시(영속성 컨텍스트) 초기화
+            
+            System.out.println("멤버 찾기");
+            Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers();
+
+            System.out.println("team내 멤버 이름 출력");
+            members.stream()
+                    .map(Member::getUsername)
+                    .forEach((name) -> System.out.println("memberName: " + name));
             
             System.out.println("트랜잭션 커밋");
             tx.commit();
