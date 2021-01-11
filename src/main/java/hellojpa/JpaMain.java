@@ -28,6 +28,10 @@ public class JpaMain {
             member.setTeam(team);
             em.persist(member);
 
+            // 양방향 맵핑이기 때문에 team내 member 리스트에도 member를 넣어주는 습관을 갖자
+            // 이는 순수 객체 상태를 고려했기 때문
+            team.getMembers().add(member);
+
             em.flush(); // DB에 쿼리 반영
             em.clear(); // 1차 캐시(영속성 컨텍스트) 초기화
             
