@@ -37,7 +37,7 @@ public class Member {
     }
 
     // 연관관계 편의 메소드를 생성하자
-    public void setTeam(Team team) {
+    public void changeTeam(Team team) {
         this.team = team;
         // 양방향 맵핑이기 때문에 team내 member 리스트에도 member를 넣어주는 습관을 갖자
         // 이는 순수 객체 상태를 고려했기 때문
