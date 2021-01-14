@@ -14,14 +14,22 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Movie movie = new Movie();
-            movie.setActor("홍길동");
-            movie.setDirector("나감독");
-            movie.setName("목걸이의 제왕");
-            movie.setPrice(100);
+            Team newTeam = new Team();
+            newTeam.setName("1팀");
+            em.persist(newTeam);
             
-            em.persist(movie);
-            tx.commit();
+            Member newMember = new Member();
+            newMember.setUsername("홍길동");
+            newMember.changeTeam(newTeam);
+            em.persist(newMember);
+            
+            em.flush();
+            em.clear();
+            
+            Member member = em.find(Member.class, newMember.getId());
+            System.out.println("team class: " + member.getTeam().getClass());
+            
+            System.out.println("team name: " + member.getTeam().getName());
         } catch (Exception e) {
             tx.rollback();
         } finally {
