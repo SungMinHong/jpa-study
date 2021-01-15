@@ -39,11 +39,11 @@ public class JpaMain {
 //                System.out.println("address = " + address.getCity());
 //            }
 
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("한식");
+//            findMember.getFavoriteFoods().remove("치킨");
+//            findMember.getFavoriteFoods().add("한식");
             
-//            findMember.getAddressHistory().remove(new Address("old1", "street", "zipcode"));
-//            findMember.getAddressHistory().add(new Address("newCity1", "street", "zipcode"));
+            findMember.getAddressHistory().remove(new Address("old1", "street", "zipcode"));
+            findMember.getAddressHistory().add(new Address("newCity1", "street", "zipcode"));
             
             tx.commit();
         } catch (Exception e) {
