@@ -21,16 +21,20 @@ public class Member {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "FAVORITE_FOOD", joinColumns =
-        @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id")
     )
     @Column(name = "food_name")
     private Set<String> favoriteFoods = new HashSet<>();
 
-    @ElementCollection
-    @CollectionTable(name = "ADDRESS", joinColumns =
-        @JoinColumn(name = "member_id")
-    )
-    private List<Address> addressHistory = new ArrayList<>();
+//    @ElementCollection
+//    @CollectionTable(name = "ADDRESS", joinColumns =
+//        @JoinColumn(name = "member_id")
+//    )
+//    private List<Address> addressHistory = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "member_id")
+    private List<AddressEntity> addressHistory = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -64,11 +68,11 @@ public class Member {
         this.favoriteFoods = favoriteFoods;
     }
 
-    public List<Address> getAddressHistory() {
+    public List<AddressEntity> getAddressHistory() {
         return addressHistory;
     }
 
-    public void setAddressHistory(List<Address> addressHistory) {
+    public void setAddressHistory(List<AddressEntity> addressHistory) {
         this.addressHistory = addressHistory;
     }
 }
