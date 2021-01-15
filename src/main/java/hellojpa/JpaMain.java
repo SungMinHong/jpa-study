@@ -15,32 +15,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("홍길동");
-            member.setHomeAddress(new Address("city", "street", "zipcode"));
-            
-            member.getFavoriteFoods().add("피자");
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("햄버거");
-
-            member.getAddressHistory().add(new AddressEntity("old1", "street", "zipcode"));
-            member.getAddressHistory().add(new AddressEntity("old2", "street", "zipcode"));
-            
-            em.persist(member);
-            
-            em.flush();
-            em.clear();
-
-            System.out.println("==============start==============");
-            Member findMember = em.find(Member.class, member.getId());  // 값 타입 컬렉션은 지연로딩임
-//            List<Address> addressHistory = findMember.getAddressHistory();
-            
-//            for (Address address : addressHistory) {
-//                System.out.println("address = " + address.getCity());
-//            }
-
-//            findMember.getFavoriteFoods().remove("치킨");
-//            findMember.getFavoriteFoods().add("한식");
+            List<Member> members = em.createQuery(
+                    "select m from Member m where m.username like '%hong%'"
+                    , Member.class
+            ).getResultList();
             
             tx.commit();
         } catch (Exception e) {
