@@ -33,14 +33,14 @@ public class JpaMain {
 
             System.out.println("==============start==============");
             Member findMember = em.find(Member.class, member.getId());  // 값 타입 컬렉션은 지연로딩임
-            List<Address> addressHistory = findMember.getAddressHistory();
+//            List<Address> addressHistory = findMember.getAddressHistory();
             
-            for (Address address : addressHistory) {
-                System.out.println("address = " + address.getCity());
-            }
+//            for (Address address : addressHistory) {
+//                System.out.println("address = " + address.getCity());
+//            }
 
-//            findMember.getFavoriteFoods().remove("치킨");
-//            findMember.getFavoriteFoods().add("한식");
+            findMember.getFavoriteFoods().remove("치킨");
+            findMember.getFavoriteFoods().add("한식");
             
 //            findMember.getAddressHistory().remove(new Address("old1", "street", "zipcode"));
 //            findMember.getAddressHistory().add(new Address("newCity1", "street", "zipcode"));
