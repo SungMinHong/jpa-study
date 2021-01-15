@@ -11,10 +11,12 @@ public class Member {
     
     @Column
     private String username;
+    
+    @Embedded
+    private Period workPeriod;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @Embedded
+    private Address homeAddress;
 
     public Long getId() {
         return id;
@@ -32,15 +34,19 @@ public class Member {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    // 연관관계 편의 메소드를 생성하자
-    public void changeTeam(Team team) {
-        this.team = team;
-        // 양방향 맵핑이기 때문에 team내 member 리스트에도 member를 넣어주는 습관을 갖자
-        // 이는 순수 객체 상태를 고려했기 때문
-        team.getMembers().add(this);
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
