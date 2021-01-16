@@ -1,9 +1,6 @@
 import jpql.Member;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -19,7 +16,13 @@ public class JpaMain {
             member.setUsername("홍");
             member.setAge(99);
             em.persist(member);
+
+            TypedQuery<Member> query = em.createQuery("SELECT m FROM Member AS m WHERE m.username = :username", Member.class);
+            query.setParameter("username", "홍");
+
+            Member singleResult = query.getSingleResult();
             
+            System.out.println(singleResult.getUsername());
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
