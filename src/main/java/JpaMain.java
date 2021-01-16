@@ -17,10 +17,9 @@ public class JpaMain {
             member.setAge(99);
             em.persist(member);
 
-            TypedQuery<Member> query = em.createQuery("SELECT m FROM Member AS m WHERE m.username = :username", Member.class);
-            query.setParameter("username", "홍");
-
-            Member singleResult = query.getSingleResult();
+            Member singleResult = em.createQuery("SELECT m FROM Member AS m WHERE m.username = :username", Member.class)
+                    .setParameter("username", "홍")
+                    .getSingleResult();
             
             System.out.println(singleResult.getUsername());
             tx.commit();
