@@ -1,5 +1,4 @@
 import jpql.Member;
-import jpql.MemberDTO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,16 +12,22 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("홍");
-            member.setAge(99);
-            em.persist(member);
-
-            MemberDTO singleResult = em.createQuery("SELECT new jpql.MemberDTO(m.username, m.age)  FROM Member AS m", MemberDTO.class)
-                    .getSingleResult();
+            for ( int i=0; i < 100; i ++) {
+                Member member = new Member();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                em.persist(member);
+            }
             
-            System.out.println("username: " + singleResult.getUsername());
-            System.out.println("age: " + singleResult.getAge());
+            List<Member> result = em.createQuery("SELECT m FROM Member AS m ORDER BY m.age desc", Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
+                    .getResultList();
+            
+            for(Member member : result) {
+                System.out.println(member);
+            }
+            
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
