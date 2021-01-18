@@ -1,4 +1,5 @@
 import jpql.Member;
+import jpql.Team;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,25 +13,30 @@ public class JpaMain {
         tx.begin();
 
         try {
-            for ( int i=0; i < 100; i ++) {
-                Member member = new Member();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAge(100);
+            member.changeTeam(team);
+            em.persist(member);
             
-            List<Member> result = em.createQuery("SELECT m FROM Member AS m ORDER BY m.age desc", Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(10)
+            em.flush();
+            em.clear();
+            System.out.println("=============================");
+            
+            String query = "SELECT m FROM Member AS m INNER JOIN m.team t";
+            List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
-            
-            for(Member member : result) {
-                System.out.println(member);
-            }
-            
+            System.out.println("=============================");
+            System.out.println(result.get(0).getTeam().getName());
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
         } finally {
             em.close();
         }
