@@ -44,13 +44,13 @@ public class JpaMain {
             em.clear();
             System.out.println("=============================");
             
-            String query = "SELECT DISTINCT t FROM Team AS t INNER JOIN FETCH t.members";
+            String query = "SELECT t FROM Team AS t";
             List<Team> result = em.createQuery(query, Team.class)
                     .getResultList();
             
             System.out.println("=============================");
             for (Team t : result) {
-                System.out.println("team: " + t.getName() + " " + t.getMembers());
+                System.out.println("team: " + t.getName() + ", team.members:" + t.getMembers());
             }
             tx.commit();
         } catch (Exception e) {
