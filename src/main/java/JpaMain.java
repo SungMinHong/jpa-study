@@ -27,31 +27,31 @@ public class JpaMain {
             member1.setAge(100);
             member1.changeTeam(teamA);
             em.persist(member1);
-            
+
             Member member2 = new Member();
             member2.setUsername("회원2");
             member2.setAge(33);
             member2.changeTeam(teamA);
             em.persist(member2);
-            
+
             Member member3 = new Member();
             member3.setUsername("회원3");
             member3.setAge(22);
             member3.changeTeam(teamB);
             em.persist(member3);
-            
+
             em.flush();
             em.clear();
             System.out.println("=============================");
-            
-            String query = "SELECT t FROM Team AS t";
-            List<Team> result = em.createQuery(query, Team.class)
+
+            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "회원1")
                     .getResultList();
             
-            System.out.println("=============================");
-            for (Team t : result) {
-                System.out.println("team: " + t.getName() + ", team.members:" + t.getMembers());
+            for (Member member : resultList) {
+                System.out.println(member);
             }
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
